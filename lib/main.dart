@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:provider/provider.dart';
+import 'package:todoapp/db_provider.dart';
+import 'package:todoapp/dp_helper.dart';
 import 'package:todoapp/to_do_home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context)=> DBProvider(dbHelper: DBHelper.getInstance()),
+    child: MyApp(),));
 }
 
 class MyApp extends StatelessWidget {

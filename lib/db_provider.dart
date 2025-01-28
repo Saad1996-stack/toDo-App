@@ -2,15 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:todoapp/dp_helper.dart';
 import 'package:todoapp/task_model.dart';
 
-class DbProvider extends ChangeNotifier
+class DBProvider extends ChangeNotifier
 {
   List<TaskModel>_mTask = [];
-  List<TaskModel>getAllNotes() => _mTask;
 
   DBHelper dbHelper;
-  DbProvider({required this.dbHelper});
+  DBProvider({required this.dbHelper});
 
-  void addTask({required TaskModel mTask})
+  List<TaskModel>getAllTasks() => _mTask;
+
+  Future<void> addTask({required TaskModel mTask})
   async{
     bool check = await dbHelper.addTask(newTask: mTask);
     if(check)
@@ -20,13 +21,13 @@ class DbProvider extends ChangeNotifier
       }
   }
 
-  void fetchInitialNotes({required TaskModel mTask})
+  Future<void> fetchInitialNotes()
   async{
     _mTask = await dbHelper.fetchAllTask();
     notifyListeners();
   }
 
-  void updateTask({required TaskModel mTask})
+  Future<void> updateTask({required TaskModel mTask})
   async{
     bool check = await dbHelper.updatedTask(updateModel: mTask);
     if(check)
@@ -36,12 +37,13 @@ class DbProvider extends ChangeNotifier
       }
   }
   
-  void deleteTask({required int taskId})
+  Future<void> deleteTask({required int taskId})
   async{
     bool check = await dbHelper.deleteTask(id: taskId);
     if(check)
       {
         _mTask = await dbHelper.fetchAllTask();
+        print("Tasks After Delete: $_mTask");
         notifyListeners();
       }
   }

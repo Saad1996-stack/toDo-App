@@ -11,8 +11,8 @@ class DBHelper
   ///COLUMN NAMES
 
   static const String COLUMN_TASK_ID = "task_id";
-  static const String COLUMN_TASK_TITLE = "title";
-  static const String COLUMN_TASK_DESC = "desc";
+  static const String COLUMN_TASK_TITLE = "task_title";
+  static const String COLUMN_TASK_DESC = "task_desc";
 
   DBHelper._();
   static DBHelper getInstance()=> DBHelper._();
@@ -68,7 +68,7 @@ class DBHelper
   async{
     var db = await getDB();
     int rowsEffected = await db.delete(TABLE_TASK,
-        where: "$COLUMN_TASK_ID : $id");
+        where: "$COLUMN_TASK_ID = $id");
     return rowsEffected>0;
   }
 }
