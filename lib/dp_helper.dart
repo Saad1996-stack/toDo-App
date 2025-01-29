@@ -13,6 +13,7 @@ class DBHelper
   static const String COLUMN_TASK_ID = "task_id";
   static const String COLUMN_TASK_TITLE = "task_title";
   static const String COLUMN_TASK_DESC = "task_desc";
+  static const String COLUMN_TASK_CHECKED = "checked";
 
   DBHelper._();
   static DBHelper getInstance()=> DBHelper._();
@@ -30,7 +31,7 @@ class DBHelper
     String dbPath = join(appDir.path, "mainDB.db");
 
     return await openDatabase(dbPath, version: 1, onCreate: (db,version){
-      db.execute("create table $TABLE_TASK ( $COLUMN_TASK_ID integer primary key autoincrement, $COLUMN_TASK_TITLE text, $COLUMN_TASK_DESC text )");
+      db.execute("create table $TABLE_TASK ( $COLUMN_TASK_ID integer primary key autoincrement, $COLUMN_TASK_TITLE text, $COLUMN_TASK_DESC text, $COLUMN_TASK_CHECKED integer)");
     });
   }
 

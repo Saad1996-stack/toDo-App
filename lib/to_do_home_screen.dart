@@ -35,16 +35,19 @@ class toDo_HomeScreen extends State<toDoHomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(""),
+        title: RichText(
+      text: TextSpan(
+      text: "ToDo",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w900,color: Color(0xFF3F9BFD),),
+        children:[
+          TextSpan(text: " Manager",style: TextStyle(fontSize: 30)),
+        ],
+      ),
+    ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Expanded(
-              flex: 1,
-              child: toDo(),
-            ),
             Flexible(
               flex: 1,
               child: iconSearch(),
@@ -79,6 +82,10 @@ class toDo_HomeScreen extends State<toDoHomeScreen>
                                     trailing: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
+                                        Checkbox(value: mTask[index].checked, onChanged: (bool? value){
+                                          ctx.read<DBProvider>().updateTask(mTask: TaskModel(id: mTask[index].id, title: mTask[index].title, desc: mTask[index].desc, checked: value ?? false));
+                                        }
+                                        ),
                                         InkWell(
                                             child: Icon(Icons.edit),
                                           onTap: ()
@@ -334,21 +341,6 @@ class toDo_HomeScreen extends State<toDoHomeScreen>
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget toDo() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "ToDo App",
-            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
-          ),
-          Icon(Icons.calendar_month_rounded),
-        ],
       ),
     );
   }
